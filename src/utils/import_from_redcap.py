@@ -6,8 +6,10 @@ import googlemaps
 import requests
 import os
 import logging
+import json
 
 OUT_PUT_FILE = "src/output/pipelinesurveydata.csv"
+OUT_PUT_JSON = "src/output/data.json"
 
 def get_csv():
     token = os.getenv("RED_CAP_API_TOKEN", default="2E036BFA999B6FB594112D27F524EA92")
@@ -33,13 +35,13 @@ def get_csv():
 
 def clean_data():
     get_csv()
-    get_all_org_api = os.getenv("GET_ALL_ORG_API", default="http://nwhcp-server/api/v1/pipeline-db/getallorgs")
+    get_all_org_api = os.getenv("GET_ALL_ORG_API", default="http://localhost:4002/api/v1/pipeline-db/getallorgs")
     google_map_api_tk= os.getenv("GOOGLE_MAP_API_TOKEN", default="AIzaSyDp-LsNg9RusqlMLx2K9_VXXWudUk2-d6c")
 
     data_in_db = requests.get(get_all_org_api).json()
     ids_already_in_db = list(map(lambda x: x.get("OrgId"), data_in_db))
-    logging.info(ids_already_in_db)
-    # gmaps = googlemaps.Client(key=google_map_api_tk)
+    # logging.info(ids_already_in_db)
+    gmaps = googlemaps.Client(key=google_map_api_tk)
 
     csv_input = pd.read_csv(OUT_PUT_FILE, encoding="ISO-8859-1")
 
@@ -54,8 +56,8 @@ def clean_data():
             # print("Participant with id {0} already exists in database".format(row['participant_id']))
             continue
         org = {}
-        # result = gmaps.geocode(row['Full Address'])
-        org['OrgID'] = row['participant_id']
+        result = gmaps.geocode(row['Full Address'])
+        org['OrgId'] = row['participant_id']
         org['OrgTitle'] = row['org_name']
         org['OrgWebsite'] = row['org_website']
         org['StreetAddress'] = row['street_address_1']
@@ -65,8 +67,8 @@ def clean_data():
         org['Phone'] = row['org_phone_number']
         org['Email'] = row['org_email']
         org['ActivityDesc'] = row['description']
-        # org['Lat'] = result[0]['geometry']['location']['lat']
-        # org['Long'] = result[0]['geometry']['location']['lng']
+        org['Lat'] = result[0]['geometry']['location']['lat']
+        org['Long'] = result[0]['geometry']['location']['lng']
         org['HasShadow'] = bool(row['has_shadow'] == 1)
         org['HasCost'] = bool(row['has_cost'] == 1)
         org['HasTransport'] = bool(row['provides_transportation'] == 1)
@@ -100,5 +102,5 @@ def clean_data():
             gradeLevels.extend((9, 10, 11, 12))
         org['GradeLevels'] = gradeLevels
         j.append(org)
-
+    
     return j

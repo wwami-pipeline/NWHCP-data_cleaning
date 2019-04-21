@@ -35,7 +35,7 @@ def get_csv():
 
 def clean_data():
     get_csv()
-    get_all_org_api = os.getenv("GET_ALL_ORG_API", default="http://localhost:4002/api/v1/pipeline-db/getallorgs")
+    get_all_org_api = os.getenv("GET_ALL_ORG_API", default="http://localhost:4002/api/v1/orgs")
     google_map_api_tk= os.getenv("GOOGLE_MAP_API_TOKEN", default="AIzaSyDp-LsNg9RusqlMLx2K9_VXXWudUk2-d6c")
 
     data_in_db = requests.get(get_all_org_api).json()

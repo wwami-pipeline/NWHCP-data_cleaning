@@ -31,8 +31,8 @@ def import_data_on_start_up():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     import_data_on_start_up()
-    schedule.every(10).seconds.do(start_scheduling)
-    # schedule.every().day.at("01:30").do(start_scheduling)
+    # schedule.every(10).seconds.do(start_scheduling)
+    schedule.every().day.at("01:30").do(start_scheduling)
     logging.info("scheduler started")
     while True:
         schedule.run_pending()

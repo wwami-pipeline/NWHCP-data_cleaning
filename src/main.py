@@ -16,10 +16,8 @@ def start_scheduling():
             logging.info("Get new entires with ID: {0}".format(list(map(lambda x: x.get("OrgId", -1), json_to_insert))))
             res = requests.post(insert_org_api, json=json_to_insert)
 
-            if res.status_code == 200:
-                logging.info("Import from redcap successful")
-            else:
-                logging.info("Import failed. Bad response from insert API.")
+            logging.info("Import from redcap done with status code: " + str(res.status_code) )
+           
     except Exception as error:
         logging.error("Error cleaning data: " + str(error))
 

@@ -4,35 +4,26 @@ import schedule
 import time
 import os
 import requests
-import json
 
-insert_org_api = os.getenv("INSERT_ORG_API", default="http://localhost:4002/api/v1/pipeline-db/poporgs")
+INSERT_ORG_API = os.getenv("INSERT_ORG_API", "http://localhost:4003/api/v1/pipeline-db/poporgs")
+TRUNCATE_ORG_API = os.getenv("TRUNCATE_ORG_API", "http://localhost:4003/api/v1/pipeline-db/truncate")
 
-def start_scheduling():
-    try:
-        json_to_insert = import_from_redcap.clean_data()
-        if len(json_to_insert) > 0:
-            # call api to import new data
-            logging.info("Get new entires with ID: {0}".format(list(map(lambda x: x.get("OrgId", -1), json_to_insert))))
-            res = requests.post(insert_org_api, json=json_to_insert)
 
-            logging.info("Import from redcap done with status code: " + str(res.status_code) )
-           
-    except Exception as error:
-        logging.error("Error cleaning data: " + str(error))
+def import_data():
+    data = import_from_redcap.get_cleaned_data()
+    res = requests.delete(TRUNCATE_ORG_API)
+    if res.status_code != 200:
+        logging.error("Cannot clean the database for new data")
+        return
+    res = requests.post(INSERT_ORG_API, json=data)
+    logging.info("Import done with status code: " + str(res.status_code))
 
-def import_data_on_start_up():
-    with open(import_from_redcap.OUT_PUT_JSON) as f:
-        
-        data = json.load(f)
-        res = requests.post(insert_org_api, json=data)
-        logging.info("Import on start up finished with status: "+str(res.status_code))
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
-    import_data_on_start_up()
+    import_data()
     # schedule.every(10).seconds.do(start_scheduling)
-    schedule.every().day.at("01:30").do(start_scheduling)
+    schedule.every().day.at("01:30").do(import_data)
     logging.info("scheduler started")
     while True:
         schedule.run_pending()

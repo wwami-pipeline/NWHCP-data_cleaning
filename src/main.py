@@ -11,6 +11,9 @@ TRUNCATE_ORG_API = os.getenv("TRUNCATE_ORG_API", "http://localhost:4003/api/v1/p
 
 def import_data():
     data = import_from_redcap.get_cleaned_data()
+    if not data:
+        logging.error("Failed to get cleaned data")
+        return
     res = requests.delete(TRUNCATE_ORG_API)
     if res.status_code != 200:
         logging.error("Cannot clean the database for new data")

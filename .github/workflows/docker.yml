@@ -58,12 +58,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      # build go binary from source
-      - name: Build React
-        run:
-            |
-            npm install
-            npm run build
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action

@@ -86,6 +86,8 @@ def get_cleaned_data():
 
             org = {}
             geocode = get_lat_lng(row["Full Address"])
+            if geocode["lat"] == 0 and geocode["long"] == 0:
+                continue  # skip if no location
             org["_id"] = row["participant_id"]
             org["OrgId"] = row["participant_id"]
             org["OrgTitle"] = row["org_name"]

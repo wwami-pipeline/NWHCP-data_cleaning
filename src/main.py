@@ -43,4 +43,4 @@ if __name__ == "__main__":
         rotation += 1
         if rotation == 10:
             rotation = 0
-        time.sleep(10)
+        time.sleep(3600)

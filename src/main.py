@@ -38,8 +38,7 @@ if __name__ == "__main__":
     while True:
         # import data
         import_data()
-        # backup data
-        os.system("mongoexport -d mongodb -c organization > backup/mongobackup" + str(rotation) + ".json")
+        print("imported data")
         # repeat
         rotation += 1
         if rotation == 10:

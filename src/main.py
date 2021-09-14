@@ -34,10 +34,10 @@ def import_data():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     while True:
         # import data
         import_data()
-        print(str(datetime.datetime.now()) + " imported data, wait 1hr")
+        print(str(datetime.datetime.now()) + " imported data, wait 1hr", flush=True)
         # repeat
         time.sleep(3600)

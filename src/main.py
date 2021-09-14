@@ -5,6 +5,7 @@ import time
 import os
 import requests
 import json
+import datetime
 from pymongo import MongoClient
 from pymongo.write_concern import WriteConcern
 
@@ -34,13 +35,9 @@ def import_data():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    rotation = 0
     while True:
         # import data
         import_data()
-        print("imported data")
+        print(str(datetime.datetime.now()) + " imported data, wait 1hr")
         # repeat
-        rotation += 1
-        if rotation == 10:
-            rotation = 0
         time.sleep(3600)

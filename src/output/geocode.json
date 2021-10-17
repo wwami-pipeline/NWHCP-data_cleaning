@@ -266,5 +266,69 @@
     "3931 Brooklyn Ave NE, Seattle, Washington 98105": {
         "lat": 47.6550783,
         "lng": -122.3147708
+    },
+    "1901 Chelan Lane, Seattle, Washington 98105": {
+        "lat": 47.657897,
+        "lng": -122.3072388
+    },
+    "asdf, asdf, Washington 12345": {
+        "lat": 47.7510741,
+        "lng": -120.7401385
+    },
+    "5031 12th Ave NE Unit B, Seattle, Washington 98105": {
+        "lat": 47.6658707,
+        "lng": -122.3154517
+    },
+    "900 12th Ave, Seattle, Washington 98122-1090": {
+        "lat": 47.61055349999999,
+        "lng": -122.3164151
+    },
+    "801 Broadway , Seattle, Washington 98122": {
+        "lat": 47.6093444,
+        "lng": -122.3215312
+    },
+    "171 Mary Gates Hall, Seattle, Washington 98105": {
+        "lat": 47.6550778,
+        "lng": -122.3080139
+    },
+    "12401 SE 320TH STREET , AUBURN, Washington 98092": {
+        "lat": 47.3130004,
+        "lng": -122.1800119
+    },
+    "Pacific Lutheran University, Tacoma, Washington 98447": {
+        "lat": 47.14519310000001,
+        "lng": -122.4436669
+    },
+    "237 West Kellogg Road, Bellingham, Washington 98229": {
+        "lat": 48.7947551,
+        "lng": -122.4925861
+    },
+    "Fred Hutchinson Cancer Research Center 1100 Fairview Ave N. , Seattle, Washington 98109": {
+        "lat": 47.6272634,
+        "lng": -122.3314858
+    },
+    "111 N. E st, Tacoma, Washington 98403": {
+        "lat": 47.2661996,
+        "lng": -122.4480095
+    },
+    "1933 Fort Vancouver Way, Vancouver, Washington 98663": {
+        "lat": 45.6346831,
+        "lng": -122.6502812
+    },
+    "9105 NE 9th St, Vancouver, Washington 98664": {
+        "lat": 45.6273251,
+        "lng": -122.5793522
+    },
+    "Raitt Hall 229, Chelan Ln, Seattle , Washington 98105": {
+        "lat": 47.657897,
+        "lng": -122.3072388
+    },
+    "308 Leon Johnson, Bozeman, Montana 59717": {
+        "lat": 45.6681541,
+        "lng": -111.0499794
+    },
+    "308 Leon Johnso, Bozeman, Montana 59717": {
+        "lat": 45.6681541,
+        "lng": -111.0499794
     }
 }

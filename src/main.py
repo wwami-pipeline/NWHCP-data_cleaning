@@ -56,6 +56,9 @@ def load_data():
     with open(OUT_PUT_JSON_PATH) as file:
         file_data = json.load(file)
 
+    for record in file_data:
+        record["_id"] = record["participant_id"]
+
     # ignore duplicated data
     collection.with_options(write_concern=WriteConcern(w=0)).insert_many(file_data)
 

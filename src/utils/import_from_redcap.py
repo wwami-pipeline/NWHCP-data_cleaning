@@ -1,24 +1,34 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pandas as pd
-import googlemaps
-import requests
-import os
 import json
 import logging
+import os
 
-OUT_PUT_FILE_PATH = "src/output/pipelinesurveydata.csv"
+import googlemaps
+import pandas as pd
+import requests
+
+OUT_PUT_CSV_PATH = "src/output/pipelinesurveydata.csv"
+OUT_PUT_JSON_PATH = "src/output/pipelinesurveydata.json"
 GEO_CODE_JSON_PATH = "src/output/geocode.json"
 
+RED_CAP_TOKEN_DEPRECATED = os.getenv("RED_CAP_API_TOKEN_DEPRECATED")
 RED_CAP_TOKEN = os.getenv("RED_CAP_API_TOKEN")
 GOOGLE_MAP_TOKEN = os.getenv("GOOGLE_MAP_API_TOKEN")
 gmaps = googlemaps.Client(key=GOOGLE_MAP_TOKEN)
 
 
-# read from redcap api, save raw data to csv
 def get_csv():
-    data = {"token": RED_CAP_TOKEN, "content": "record", "format": "csv", "filterLogic": "[pipeline_mapping_project_survey_complete]=2"}
+    """
+    DEPRECATED
+    read from redcap api, save raw data to csv
+    """
+    data = {
+        "token": RED_CAP_TOKEN_DEPRECATED,
+        "content": "record",
+        "format": "csv",
+    }
 
     headers = {
         # 'content-type': 'application/json',
@@ -29,12 +39,56 @@ def get_csv():
     if res.status_code != 200:
         raise Exception("request error")
 
-    with open(OUT_PUT_FILE_PATH, "w") as f:
+    with open(OUT_PUT_CSV_PATH, "w") as f:
         f.write(str(res.text))
 
 
-# get latitude and longitude of address
+def get_json():
+    """
+    read from redcap api, save to json
+    """
+    data = {
+        "token": RED_CAP_TOKEN,
+        "content": "record",
+        "format": "json",
+        "type": "flat",
+    }
+
+    res = requests.post("https://redcap.iths.org/api/", data=data)
+    if res.status_code != 200:
+        raise Exception("request error")
+
+    file_data = json.loads(res.text)
+
+    for record in file_data:
+        record["_id"] = record["participant_id"]
+        full_address = ",".join(
+            [
+                " ".join(
+                    [
+                        record.get("street_address_1", "").strip(),
+                        record.get("street_address_2", "").strip(),
+                    ]
+                ),
+                record.get("org_city", "").strip(),
+                record.get("org_state", "").strip(),
+                record.get("zip_code", "").strip(),
+            ]
+        )
+        geocode = get_lat_lng(full_address)
+        if geocode["lat"] == 0 and geocode["lng"] == 0:
+            continue  # skip if no location
+        record["latitude"] = geocode["lat"]
+        record["longitude"] = geocode["lng"]
+
+    with open(OUT_PUT_JSON_PATH, "w") as f:
+        f.write(json.dumps(file_data))
+
+
 def get_lat_lng(full_address: str):
+    """
+    get latitude and longitude of address
+    """
     if full_address == "":
         return {"lat": 0, "lng": 0}
 
@@ -66,19 +120,28 @@ def get_lat_lng(full_address: str):
         return geo_code_dict[full_address]
 
 
-# read raw csv clean data to list of dict
 def get_cleaned_data():
-
+    """
+    read raw csv clean data to list of dict
+    """
     try:
         get_csv()
-    except error:
+    except:
         logging.error("Cannot pull data from red cap. Is API key correct?")
         return
     else:
         # logging.info(ids_already_in_db)
-        csv_input = pd.read_csv(OUT_PUT_FILE_PATH, encoding="ISO-8859-1")
+        csv_input = pd.read_csv(OUT_PUT_CSV_PATH, encoding="ISO-8859-1")
 
-        csv_input["Full Address"] = csv_input["street_address_1"] + ", " + csv_input["org_city"] + ", " + csv_input["org_state"] + " " + csv_input["zip_code"]
+        csv_input["Full Address"] = (
+            csv_input["street_address_1"]
+            + ", "
+            + csv_input["org_city"]
+            + ", "
+            + csv_input["org_state"]
+            + " "
+            + csv_input["zip_code"]
+        )
 
         j = []
         csv_input = csv_input.fillna("")

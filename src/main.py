@@ -1,6 +1,7 @@
 import datetime
 import json
 import logging
+import os
 import time
 
 from pymongo import MongoClient
@@ -9,6 +10,7 @@ from pymongo.write_concern import WriteConcern
 from utils import import_from_redcap
 
 OUT_PUT_JSON_PATH = "src/output/pipelinesurveydata.json"
+MONGO_ADDR = os.environ.get("MONGO_ADDR", "mongodb://localhost:27017/")
 
 
 def import_data():
@@ -24,7 +26,7 @@ def import_data():
         f.write(json.dumps(data))
 
     # connect to mongo
-    myclient = MongoClient("mongodb://localhost:27017/")
+    myclient = MongoClient(MONGO_ADDR)
 
     # database
     db = myclient["mongodb"]
@@ -46,18 +48,15 @@ def load_data():
     import_from_redcap.get_json()
 
     # connect to mongo
-    myclient = MongoClient("mongodb://localhost:27017/")
+    myclient = MongoClient(MONGO_ADDR)
 
     # database
     db = myclient["mongodb"]
-    collection = db["organization"]
+    collection = db["surveys"]
 
     # Loading or Opening the json file
     with open(OUT_PUT_JSON_PATH) as file:
         file_data = json.load(file)
-
-    for record in file_data:
-        record["_id"] = record["participant_id"]
 
     # ignore duplicated data
     collection.with_options(write_concern=WriteConcern(w=0)).insert_many(file_data)
@@ -66,8 +65,10 @@ def load_data():
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     while True:
+        # deprecated
+        import_data()
         # import data
         load_data()
-        print(str(datetime.datetime.now()) + " imported data, wait 1hr", flush=True)
+        logging.debug(str(datetime.datetime.now()) + " imported data, wait 1hr")
         # repeat
         time.sleep(3600)

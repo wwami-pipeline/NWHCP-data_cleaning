@@ -13,6 +13,7 @@ OUT_PUT_CSV_PATH = "src/output/pipelinesurveydata.csv"
 OUT_PUT_JSON_PATH = "src/output/pipelinesurveydata.json"
 GEO_CODE_JSON_PATH = "src/output/geocode.json"
 
+RED_CAP_TOKEN_DEPRECATED = os.getenv("RED_CAP_API_TOKEN_DEPRECATED")
 RED_CAP_TOKEN = os.getenv("RED_CAP_API_TOKEN")
 GOOGLE_MAP_TOKEN = os.getenv("GOOGLE_MAP_API_TOKEN")
 gmaps = googlemaps.Client(key=GOOGLE_MAP_TOKEN)
@@ -24,7 +25,7 @@ def get_csv():
     read from redcap api, save raw data to csv
     """
     data = {
-        "token": RED_CAP_TOKEN,
+        "token": RED_CAP_TOKEN_DEPRECATED,
         "content": "record",
         "format": "csv",
     }
@@ -57,8 +58,31 @@ def get_json():
     if res.status_code != 200:
         raise Exception("request error")
 
+    file_data = json.loads(res.text)
+
+    for record in file_data:
+        record["_id"] = record["participant_id"]
+        full_address = ",".join(
+            [
+                " ".join(
+                    [
+                        record.get("street_address_1", "").strip(),
+                        record.get("street_address_2", "").strip(),
+                    ]
+                ),
+                record.get("org_city", "").strip(),
+                record.get("org_state", "").strip(),
+                record.get("zip_code", "").strip(),
+            ]
+        )
+        geocode = get_lat_lng(full_address)
+        if geocode["lat"] == 0 and geocode["lng"] == 0:
+            continue  # skip if no location
+        record["latitude"] = geocode["lat"]
+        record["longitude"] = geocode["lng"]
+
     with open(OUT_PUT_JSON_PATH, "w") as f:
-        f.write(str(res.text))
+        f.write(json.dumps(file_data))
 
 
 def get_lat_lng(full_address: str):

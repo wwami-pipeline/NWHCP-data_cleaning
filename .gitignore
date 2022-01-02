@@ -3,3 +3,4 @@ __pycache__/
 .idea/
 *.env
 settings.json
+._.DS_Store

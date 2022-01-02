@@ -58,7 +58,8 @@ def load_data():
     with open(OUT_PUT_JSON_PATH) as file:
         file_data = json.load(file)
 
-    # ignore duplicated data
+    # delete data and replace with new data
+    collection.delete_many({})
     collection.with_options(write_concern=WriteConcern(w=0)).insert_many(file_data)
 
 
@@ -66,7 +67,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     while True:
         # deprecated
-        import_data()
+        # import_data()
         # import data
         load_data()
         logging.debug(str(datetime.datetime.now()) + " imported data, wait 1hr")

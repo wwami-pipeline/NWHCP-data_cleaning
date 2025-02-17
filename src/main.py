@@ -69,7 +69,12 @@ if __name__ == "__main__":
         # deprecated
         # import_data()
         # import data
-        load_data()
+        try:
+            load_data()
+        except Exception as e:
+            print("The data was not successfully loaded")
+            
+
         logging.debug(str(datetime.datetime.now()) + " imported data, wait 1hr")
         # repeat
         time.sleep(3600)

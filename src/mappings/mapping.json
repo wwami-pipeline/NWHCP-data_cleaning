@@ -1,0 +1,162 @@
+{
+  "$schema": "nwhcp-mapping-1.0",
+  "version": 2,
+  "generated_at": "2025-10-21T18:50:53Z",
+
+  "global": {
+    "empty_values": ["", null, "NULL", "N/A", "na", "NaN"],
+    "truthy_values": ["1", 1, true, "true", "True", "TRUE", "Y", "Yes", "YES"]
+  },
+
+  "fields": {
+    "participant_id": { "type": "single", "priority": ["participant_id"] },
+    "redcap_survey_identifier": { "type": "single", "priority": ["redcap_survey_identifier"] },
+    "pipeline_mapping_project_survey_timestamp": {
+      "type": "single",
+      "priority": ["pipeline_mapping_project_survey_timestamp"]
+    },
+
+    "org_name": { "type": "single", "priority": ["org_name", "org_name_v2"] },
+    "street_address_1": { "type": "single", "priority": ["street_address_1", "street_address_1_v2"] },
+    "street_address_2": { "type": "single", "priority": ["street_address_2", "street_address_2_v2"] },
+    "org_city": { "type": "single", "priority": ["org_city", "org_city_v2"] },
+    "org_state": { "type": "single", "priority": ["org_state", "org_state_v2"] },
+    "zip_code": { "type": "single", "priority": ["zip_code", "zip_code_v2"] },
+    "org_email": { "type": "single", "priority": ["org_email", "org_email_v2"] },
+    "org_phone_number": { "type": "single", "priority": ["org_phone_number", "org_phone_number_v2"] },
+    "org_website": { "type": "single", "priority": ["org_website", "org_website_v2"] },
+    "description": { "type": "single", "priority": ["description", "description_v2"] },
+
+    "program_type_2___pathway_programs": {
+      "type": "single",
+      "priority": ["program_type_2___pathway_programs"]
+    },
+    "program_type_2___health_schools": {
+      "type": "single",
+      "priority": ["program_type_2___health_schools"]
+    },
+    "program_type_2___adv_ising": {
+      "type": "single",
+      "priority": ["program_type_2___adv_ising"]
+    },
+
+    "pathway_type___health_career": { "type": "single", "priority": ["pathway_type___health_career"] },
+    "pathway_type___tutoring": { "type": "single", "priority": ["pathway_type___tutoring"] },
+    "pathway_type___college_readiness": { "type": "single", "priority": ["pathway_type___college_readiness"] },
+    "pathway_type___youth_camp": { "type": "single", "priority": ["pathway_type___youth_camp"] },
+    "pathway_type___work_based": { "type": "single", "priority": ["pathway_type___work_based"] },
+    "pathway_type___mentor": { "type": "single", "priority": ["pathway_type___mentor"] },
+    "pathway_type___certification": { "type": "single", "priority": ["pathway_type___certification"] },
+    "pathway_type___community_service": { "type": "single", "priority": ["pathway_type___community_service"] },
+    "pathway_type___other": { "type": "single", "priority": ["pathway_type___other"] },
+
+    "pathway_program_other": { "type": "single", "priority": ["pathway_program_other"] },
+
+    "projectlocations_2___1": { "type": "single", "priority": ["projectlocations_2___1"] },
+    "projectlocations_2___2": { "type": "single", "priority": ["projectlocations_2___2"] },
+    "projectlocations_2___3": { "type": "single", "priority": ["projectlocations_2___3"] },
+    "projectlocations_2___4": { "type": "single", "priority": ["projectlocations_2___4"] },
+    "projectlocations_2___5": { "type": "single", "priority": ["projectlocations_2___5"] },
+
+    "state_servicearea___1": { "type": "single", "priority": ["state_servicearea___1"] },
+    "state_servicearea___2": { "type": "single", "priority": ["state_servicearea___2"] },
+    "state_servicearea___3": { "type": "single", "priority": ["state_servicearea___3"] },
+    "state_servicearea___4": { "type": "single", "priority": ["state_servicearea___4"] },
+    "state_servicearea___5": { "type": "single", "priority": ["state_servicearea___5"] },
+    "state_servicearea___6": { "type": "single", "priority": ["state_servicearea___6"] },
+    "state_servicearea___7": { "type": "single", "priority": ["state_servicearea___7"] },
+
+    "region_servicearea": { "type": "single", "priority": ["region_servicearea", "region_servicearea_v2"] },
+    "city_servicearea": { "type": "single", "priority": ["city_servicearea", "city_servicearea_v2"] },
+    "zip_servicearea": { "type": "single", "priority": ["zip_servicearea", "zip_servicearea_v2"] },
+    "other_servicearea": { "type": "single", "priority": ["other_servicearea", "other_servicearea_v2"] },
+
+    "contact_salutation": { "type": "single", "priority": ["contact_salutation", "contact_salutation_v2"] },
+    "contact_fname_1": { "type": "single", "priority": ["contact_fname_1", "contact_fname_1_v2"] },
+    "contact_lname_1": { "type": "single", "priority": ["contact_lname_1", "contact_lname_1_v2"] },
+    "contact_email_1": { "type": "single", "priority": ["contact_email_1", "contact_email_1_v2"] },
+
+    "community_partner_3": { "type": "single", "priority": ["community_partner_3"] },
+
+    "partnerlist_options___1": { "type": "single", "priority": ["partnerlist_options___1"] },
+    "partnerlist_options___2": { "type": "single", "priority": ["partnerlist_options___2"] },
+
+    "upload_partner": { "type": "single", "priority": ["upload_partner"] },
+    "text_partnerlist": { "type": "single", "priority": ["text_partnerlist"] },
+
+    "target_school_age___middle": { "type": "single", "priority": ["target_school_age___middle"] },
+    "target_school_age___highschool": { "type": "single", "priority": ["target_school_age___highschool"] },
+    "target_school_age___com_college": { "type": "single", "priority": ["target_school_age___com_college"] },
+    "target_school_age___undergrad": { "type": "single", "priority": ["target_school_age___undergrad"] },
+    "target_school_age___postgrad": { "type": "single", "priority": ["target_school_age___postgrad"] },
+    "target_school_age___other": { "type": "single", "priority": ["target_school_age___other"] },
+
+    "other_education": { "type": "single", "priority": ["other_education", "other_education_v2"] },
+
+    "career_emp___medicine": { "type": "single", "priority": ["career_emp___medicine"] },
+    "career_emp___nursing": { "type": "single", "priority": ["career_emp___nursing"] },
+    "career_emp___dentistry": { "type": "single", "priority": ["career_emp___dentistry"] },
+    "career_emp___pharmacy": { "type": "single", "priority": ["career_emp___pharmacy"] },
+    "career_emp___social_work": { "type": "single", "priority": ["career_emp___social_work"] },
+    "career_emp___mental_health": { "type": "single", "priority": ["career_emp___mental_health"] },
+    "career_emp___rehab_med": { "type": "single", "priority": ["career_emp___rehab_med"] },
+    "career_emp___public_health": { "type": "single", "priority": ["career_emp___public_health"] },
+    "career_emp___gen_health_sci": { "type": "single", "priority": ["career_emp___gen_health_sci"] },
+    "career_emp___gen_sci": { "type": "single", "priority": ["career_emp___gen_sci"] },
+    "career_emp___stem": { "type": "single", "priority": ["career_emp___stem"] },
+    "career_emp___other": { "type": "single", "priority": ["career_emp___other"] },
+    "career_emp_other": { "type": "single", "priority": ["career_emp_other", "career_emp_other_v2"] },
+
+    "program_duration___wkday_day": { "type": "single", "priority": ["program_duration___wkday_day"] },
+    "program_duration___wkday_ev": { "type": "single", "priority": ["program_duration___wkday_ev"] },
+    "program_duration___wkend": { "type": "single", "priority": ["program_duration___wkend"] },
+    "program_duration___after_school": { "type": "single", "priority": ["program_duration___after_school"] },
+    "program_duration___year_long": { "type": "single", "priority": ["program_duration___year_long"] },
+    "program_duration___school_break": { "type": "single", "priority": ["program_duration___school_break"] },
+    "program_duration___virtual_asyn": { "type": "single", "priority": ["program_duration___virtual_asyn"] },
+
+    "fin_support_2___1": { "type": "single", "priority": ["fin_support_2___1"] },
+    "fin_support_2___2": { "type": "single", "priority": ["fin_support_2___2"] },
+    "fin_support_2___3": { "type": "single", "priority": ["fin_support_2___3"] },
+    "fin_support_2___4": { "type": "single", "priority": ["fin_support_2___4"] },
+    "fin_support_2___5": { "type": "single", "priority": ["fin_support_2___5"] },
+
+    "has_shadow": { "type": "single", "priority": ["has_shadow", "has_shadow_v2"] },
+    "shadow_edu_req": { "type": "single", "priority": ["shadow_edu_req", "shadow_edu_req_v2"] },
+
+    "public_transportation": {
+      "type": "single",
+      "priority": ["public_transportation", "public_transportation_v2"]
+    },
+    "academic_credit": { "type": "single", "priority": ["academic_credit", "academic_credit_v2"] },
+
+    "certificate_yesno": { "type": "single", "priority": ["certificate_yesno", "certificate_yesno_v2"] },
+    "certificate_title": { "type": "single", "priority": ["certificate_title", "certificate_title_v2"] },
+
+    "background_check": { "type": "single", "priority": ["background_check"] },
+    "citizenship": { "type": "single", "priority": ["citizenship"] },
+
+    "age_requirement___under_18": { "type": "single", "priority": ["age_requirement___under_18"] },
+    "age_requirement___over_18": { "type": "single", "priority": ["age_requirement___over_18"] },
+    "age_requirement___no": { "type": "single", "priority": ["age_requirement___no"] },
+
+    "enrollment___yes": { "type": "single", "priority": ["enrollment___yes"] },
+    "enrollment___no": { "type": "single", "priority": ["enrollment___no"] },
+
+    "grants___yes": { "type": "single", "priority": ["grants___yes"] },
+    "grants___no": { "type": "single", "priority": ["grants___no"] },
+
+    "lrp___yes": { "type": "single", "priority": ["lrp___yes"] },
+    "lrp___no": { "type": "single", "priority": ["lrp___no"] },
+
+    "comments": { "type": "single", "priority": ["comments", "comments_v2"] },
+
+    "pipeline_mapping_project_survey_complete": {
+      "type": "single",
+      "priority": ["pipeline_mapping_project_survey_complete"]
+    },
+
+    "latitude": { "type": "single", "priority": ["latitude"] },
+    "longitude": { "type": "single", "priority": ["longitude"] }
+  }
+}

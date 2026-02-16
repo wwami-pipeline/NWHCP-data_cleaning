@@ -151,6 +151,8 @@
 
     "comments": { "type": "single", "priority": ["comments", "comments_v2"] },
 
+    "next_steps": { "type": "single", "priority": ["next_steps"] },
+
     "pipeline_mapping_project_survey_complete": {
       "type": "single",
       "priority": ["pipeline_mapping_project_survey_complete"]
